@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "npm run copy-types && vite build",
-    "copy-types": "cp node_modules/rls-dsl/dist/bundle.d.ts src/rls-dsl-types.d.ts",
+    "copy-types": "node scripts/copy-types.js",
     "lint": "eslint .",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
