@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Play, Copy, CheckCircle, AlertCircle } from 'lucide-react';
-import Editor from '@monaco-editor/react';
+import Editor, { Monaco } from '@monaco-editor/react';
 import * as RLS from 'rls-dsl';
 
 const EXAMPLE_CODE = `const policy = createPolicy('user_documents')
@@ -160,6 +160,15 @@ export default function RLSTester() {
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
 
+  // Disable all TypeScript diagnostics (errors, warnings)
+  const handleEditorWillMount = (monaco: Monaco) => {
+    monaco.languages.typescript.typescriptDefaults.setDiagnosticsOptions({
+      noSemanticValidation: true,
+      noSyntaxValidation: true,
+      noSuggestionDiagnostics: true,
+    });
+  };
+
   const executeCode = () => {
     try {
       setError('');
@@ -255,6 +264,7 @@ export default function RLSTester() {
               theme="vs-dark"
               value={input}
               onChange={(value) => setInput(value || '')}
+              beforeMount={handleEditorWillMount}
               options={{
                 minimap: { enabled: false },
                 fontSize: 14,
