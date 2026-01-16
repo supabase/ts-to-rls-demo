@@ -17,7 +17,7 @@
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
     "tailwind": "^4.0.0",
-    "ts-to-rls": "https://pkg.pr.new/supabase/ts-to-rls@9297765"
+    "ts-to-rls": "https://pkg.pr.new/supabase/ts-to-rls@f836bf632de3e71c5b880bcc31198c88a63e2b72"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
