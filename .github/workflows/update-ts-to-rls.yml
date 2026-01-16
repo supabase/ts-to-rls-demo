@@ -1,0 +1,50 @@
+name: Update ts-to-rls from pkg.pr.new
+
+on:
+  workflow_dispatch:
+    inputs:
+      sha:
+        description: 'SHA from supabase/ts-to-rls to install'
+        required: true
+        type: string
+
+jobs:
+  update-dependency:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependency from pkg.pr.new
+        run: npm i https://pkg.pr.new/supabase/ts-to-rls@${{ inputs.sha }}
+
+      - name: Create Pull Request
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          BRANCH_NAME="update-ts-to-rls-${{ inputs.sha }}"
+
+          git checkout -b "$BRANCH_NAME"
+          git add package.json package-lock.json
+          git commit -m "Update ts-to-rls to ${{ inputs.sha }} from pkg.pr.new"
+          git push origin "$BRANCH_NAME"
+
+          gh pr create \
+            --title "Update ts-to-rls to ${{ inputs.sha }}" \
+            --body "This PR updates ts-to-rls to the version from pkg.pr.new at SHA ${{ inputs.sha }}
+
+          Installed via: \`npm i https://pkg.pr.new/supabase/ts-to-rls@${{ inputs.sha }}\`" \
+            --base main \
+            --head "$BRANCH_NAME"
