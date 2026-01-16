@@ -12,7 +12,7 @@ dist-ssr
 *.local
 
 # Generated during build
-src/rls-dsl-types.d.ts
+src/ts-to-rls-types.d.ts
 
 .vscode/*
 !.vscode/extensions.json

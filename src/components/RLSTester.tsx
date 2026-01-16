@@ -1,10 +1,10 @@
 import { useState } from 'react';
 import { Play, Copy, CheckCircle, AlertCircle } from 'lucide-react';
 import Editor, { Monaco } from '@monaco-editor/react';
-import * as RLS from 'rls-dsl';
+import * as RLS from 'ts-to-rls';
 
 // Import bundled type definitions - single file, zero maintenance
-import rlsDslBundledTypes from '../rls-dsl-types.d.ts?raw';
+import rlsDslBundledTypes from '../ts-to-rls-types.d.ts?raw';
 
 const EXAMPLE_CODE = `const policy = createPolicy('user_documents')
   .on('documents')
@@ -168,12 +168,12 @@ export default function RLSTester() {
     // Add bundled type definitions to Monaco
     monaco.languages.typescript.typescriptDefaults.addExtraLib(
       rlsDslBundledTypes,
-      'file:///node_modules/rls-dsl/index.d.ts'
+      'file:///node_modules/ts-to-rls/index.d.ts'
     );
 
     // Create global declarations so functions work without imports
     const globalDeclarations = `
-      import type * as RLS from 'rls-dsl';
+      import type * as RLS from 'ts-to-rls';
 
       declare global {
         const createPolicy: typeof RLS.createPolicy;

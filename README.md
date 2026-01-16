@@ -1,6 +1,6 @@
 # RLS Policy DSL Tester
 
-An interactive demo application for testing and generating PostgreSQL Row Level Security (RLS) policies using the [`rls-dsl`](https://github.com/supabase/ts-to-rls) TypeScript library.
+An interactive demo application for testing and generating PostgreSQL Row Level Security (RLS) policies using the [`ts-to-rls`](https://github.com/supabase/ts-to-rls) TypeScript library.
 
 **Live Demo:** https://ts-to-rls-demo.vercel.app/
 
@@ -94,7 +94,7 @@ USING ((user_id = auth.uid()));
 - TypeScript
 - Vite
 - Tailwind CSS
-- [rls-dsl](https://github.com/supabase/ts-to-rls) - TypeScript DSL for PostgreSQL RLS policies
+- [ts-to-rls](https://github.com/supabase/ts-to-rls) - TypeScript DSL for PostgreSQL RLS policies
 
 ## License
 
