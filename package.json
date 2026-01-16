@@ -1,5 +1,5 @@
 {
-  "name": "vite-react-typescript-starter",
+  "name": "ts-to-rls-demo",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -13,10 +13,10 @@
   },
   "dependencies": {
     "@monaco-editor/react": "^4.7.0",
-    "@supabase/supabase-js": "^2.90.1",
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
+    "tailwind": "^4.0.0",
     "ts-to-rls": "https://pkg.pr.new/supabase/ts-to-rls@9297765"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "eslint": "^9.9.1",
     "eslint-plugin-react-hooks": "^7.0.1",
     "eslint-plugin-react-refresh": "^0.4.11",
-    "globals": "^15.9.0",
+    "globals": "^17.0.0",
     "postcss": "^8.4.35",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.5.3",
