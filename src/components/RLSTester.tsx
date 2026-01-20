@@ -263,15 +263,15 @@ export default function RLSTester() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100">
+    <div className="min-h-screen bg-dark-bg">
       <div className="max-w-screen-2xl mx-auto p-6">
         <header className="mb-8">
           <div className="flex items-start justify-between">
             <div>
-              <h1 className="text-4xl font-bold text-slate-900 mb-2">
+              <h1 className="text-4xl font-bold text-text-primary mb-2">
                 RLS Policy DSL Tester
               </h1>
-              <p className="text-slate-600">
+              <p className="text-text-secondary">
                 Test and generate PostgreSQL Row Level Security policies with TypeScript
               </p>
             </div>
@@ -279,7 +279,7 @@ export default function RLSTester() {
               href="https://supabase.github.io/ts-to-rls/"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg transition-colors text-sm font-medium whitespace-nowrap"
+              className="px-4 py-2 bg-supabase-lime hover:bg-supabase-lime-hover text-dark-bg rounded-lg transition-colors text-sm font-medium whitespace-nowrap"
             >
               View Docs
             </a>
@@ -287,13 +287,13 @@ export default function RLSTester() {
         </header>
 
         <div className="mb-6">
-          <h3 className="text-sm font-semibold text-slate-700 mb-3">Examples:</h3>
+          <h3 className="text-sm font-semibold text-text-primary mb-3">Examples:</h3>
           <div className="flex flex-wrap gap-2">
             {EXAMPLES.map((example) => (
               <button
                 key={example.name}
                 onClick={() => loadExample(example.code)}
-                className="px-4 py-2 bg-white border border-slate-200 rounded-lg text-sm text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-colors"
+                className="px-4 py-2 bg-dark-surface border border-dark-border rounded-lg text-sm text-text-primary hover:bg-dark-surface-2 hover:border-dark-border-strong transition-colors"
               >
                 {example.name}
               </button>
@@ -302,12 +302,12 @@ export default function RLSTester() {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+          <div className="bg-dark-surface rounded-xl shadow-sm border border-dark-border overflow-hidden flex flex-col">
             <div className="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
               <h2 className="font-semibold">TypeScript Input</h2>
               <button
                 onClick={executeCode}
-                className="flex items-center gap-2 bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+                className="flex items-center gap-2 bg-supabase-lime hover:bg-supabase-lime-hover text-dark-bg px-4 py-2 rounded-lg transition-colors text-sm font-medium"
               >
                 <Play size={16} />
                 Generate
@@ -334,13 +334,13 @@ export default function RLSTester() {
             />
           </div>
 
-          <div className="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden flex flex-col">
+          <div className="bg-dark-surface rounded-xl shadow-sm border border-dark-border overflow-hidden flex flex-col">
             <div className="bg-slate-800 text-white px-6 py-4 flex items-center justify-between">
               <h2 className="font-semibold">Generated SQL</h2>
               {output && (
                 <button
                   onClick={copyToClipboard}
-                  className="flex items-center gap-2 bg-slate-700 hover:bg-slate-600 px-4 py-2 rounded-lg transition-colors text-sm font-medium"
+                  className="flex items-center gap-2 bg-dark-surface-2 hover:bg-dark-border-strong px-4 py-2 rounded-lg transition-colors text-sm font-medium"
                 >
                   {copied ? (
                     <>
@@ -358,11 +358,11 @@ export default function RLSTester() {
             </div>
             {error ? (
               <div className="flex-1 p-6 min-h-[600px]">
-                <div className="flex items-start gap-3 bg-red-50 border border-red-200 rounded-lg p-4">
-                  <AlertCircle className="text-red-600 flex-shrink-0" size={20} />
+                <div className="flex items-start gap-3 bg-red-950/50 border border-red-800 rounded-lg p-4">
+                  <AlertCircle className="text-red-400 flex-shrink-0" size={20} />
                   <div>
-                    <h3 className="font-semibold text-red-900 mb-1">Error</h3>
-                    <p className="text-red-700 text-sm font-mono">{error}</p>
+                    <h3 className="font-semibold text-red-300 mb-1">Error</h3>
+                    <p className="text-red-400 text-sm font-mono">{error}</p>
                   </div>
                 </div>
               </div>
@@ -384,7 +384,7 @@ export default function RLSTester() {
               />
             ) : (
               <div className="flex items-center justify-center min-h-[600px]">
-                <p className="text-slate-400 text-sm">
+                <p className="text-text-tertiary text-sm">
                   Click "Generate" to see the SQL output
                 </p>
               </div>
@@ -392,22 +392,22 @@ export default function RLSTester() {
           </div>
         </div>
 
-        <div className="mt-8 bg-white rounded-xl shadow-sm border border-slate-200 p-6">
+        <div className="mt-8 bg-dark-surface rounded-xl shadow-sm border border-dark-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="font-semibold text-slate-900">Available Functions</h3>
+            <h3 className="font-semibold text-text-primary">Available Functions</h3>
             <a
               href="https://supabase.github.io/ts-to-rls/"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm text-emerald-600 hover:text-emerald-700 font-medium"
+              className="text-sm text-supabase-lime hover:text-supabase-lime-hover font-medium"
             >
               Full Documentation →
             </a>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 text-sm">
             <div>
-              <h4 className="font-semibold text-slate-700 mb-2">Policy Builder</h4>
-              <code className="text-xs text-slate-600 block">
+              <h4 className="font-semibold text-text-primary mb-2">Policy Builder</h4>
+              <code className="text-xs text-text-secondary block">
                 createPolicy(name)<br />
                 .on(table)<br />
                 .read() | .write()<br />
@@ -418,8 +418,8 @@ export default function RLSTester() {
               </code>
             </div>
             <div>
-              <h4 className="font-semibold text-slate-700 mb-2">Conditions</h4>
-              <code className="text-xs text-slate-600 block">
+              <h4 className="font-semibold text-text-primary mb-2">Conditions</h4>
+              <code className="text-xs text-text-secondary block">
                 column(name).eq(value)<br />
                 .gt() .gte() .lt() .lte()<br />
                 .in() .like() .ilike()<br />
@@ -428,8 +428,8 @@ export default function RLSTester() {
               </code>
             </div>
             <div>
-              <h4 className="font-semibold text-slate-700 mb-2">Helper Methods</h4>
-              <code className="text-xs text-slate-600 block">
+              <h4 className="font-semibold text-text-primary mb-2">Helper Methods</h4>
+              <code className="text-xs text-text-secondary block">
                 column(name).isOwner()<br />
                 .isPublic()<br />
                 .belongsToTenant()<br />
@@ -437,16 +437,16 @@ export default function RLSTester() {
               </code>
             </div>
             <div>
-              <h4 className="font-semibold text-slate-700 mb-2">Context</h4>
-              <code className="text-xs text-slate-600 block">
+              <h4 className="font-semibold text-text-primary mb-2">Context</h4>
+              <code className="text-xs text-text-secondary block">
                 auth.uid()<br />
                 session.get(key, type)<br />
                 currentUser()
               </code>
             </div>
             <div>
-              <h4 className="font-semibold text-slate-700 mb-2">Subqueries</h4>
-              <code className="text-xs text-slate-600 block">
+              <h4 className="font-semibold text-text-primary mb-2">Subqueries</h4>
+              <code className="text-xs text-text-secondary block">
                 from(table)<br />
                 .select(cols)<br />
                 .where(condition)<br />
@@ -454,8 +454,8 @@ export default function RLSTester() {
               </code>
             </div>
             <div>
-              <h4 className="font-semibold text-slate-700 mb-2">Templates</h4>
-              <code className="text-xs text-slate-600 block">
+              <h4 className="font-semibold text-text-primary mb-2">Templates</h4>
+              <code className="text-xs text-text-secondary block">
                 policies.userOwned()<br />
                 policies.tenantIsolation()<br />
                 policies.publicAccess()<br />
