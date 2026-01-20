@@ -5,7 +5,11 @@ on:
     inputs:
       sha:
         description: 'SHA from supabase/ts-to-rls to install'
-        required: true
+        required: false
+        type: string
+      pr_number:
+        description: 'PR number from supabase/ts-to-rls repository'
+        required: false
         type: string
 
 jobs:
@@ -24,8 +28,52 @@ jobs:
         with:
           node-version: '20'
 
+      - name: Validate inputs
+        run: |
+          if [[ -z "${{ inputs.sha }}" && -z "${{ inputs.pr_number }}" ]]; then
+            echo "Error: Either 'sha' or 'pr_number' must be provided"
+            exit 1
+          fi
+
+      - name: Resolve SHA from PR
+        if: inputs.sha == '' && inputs.pr_number != ''
+        id: resolve-sha
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          echo "Fetching latest commit SHA from PR #${{ inputs.pr_number }}"
+          SHA=$(gh pr view ${{ inputs.pr_number }} \
+            --repo supabase/ts-to-rls \
+            --json headRefOid \
+            --jq '.headRefOid')
+
+          if [[ -z "$SHA" ]]; then
+            echo "Error: Failed to fetch SHA from PR #${{ inputs.pr_number }}"
+            exit 1
+          fi
+
+          echo "Resolved SHA: $SHA"
+          echo "sha=$SHA" >> $GITHUB_OUTPUT
+
+      - name: Set computed values
+        id: compute
+        run: |
+          if [[ -n "${{ inputs.sha }}" ]]; then
+            # SHA input takes priority
+            echo "branch_name=update-ts-to-rls-${{ inputs.sha }}" >> $GITHUB_OUTPUT
+            echo "reference=${{ inputs.sha }}" >> $GITHUB_OUTPUT
+            echo "sha=${{ inputs.sha }}" >> $GITHUB_OUTPUT
+            echo "description=SHA ${{ inputs.sha }}" >> $GITHUB_OUTPUT
+          else
+            # PR number path
+            echo "branch_name=update-ts-to-rls-pr-${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
+            echo "reference=PR #${{ inputs.pr_number }}" >> $GITHUB_OUTPUT
+            echo "sha=${{ steps.resolve-sha.outputs.sha }}" >> $GITHUB_OUTPUT
+            echo "description=PR #${{ inputs.pr_number }} (SHA: ${{ steps.resolve-sha.outputs.sha }})" >> $GITHUB_OUTPUT
+          fi
+
       - name: Install dependency from pkg.pr.new
-        run: npm i https://pkg.pr.new/supabase/ts-to-rls@${{ inputs.sha }}
+        run: npm i https://pkg.pr.new/supabase/ts-to-rls@${{ steps.compute.outputs.sha }}
 
       - name: Generate token
         id: app-token
@@ -38,12 +86,16 @@ jobs:
         uses: peter-evans/create-pull-request@c5a7806660adbe173f04e3e038b0ccdcd758773c # v6.1.0
         with:
           token: ${{ steps.app-token.outputs.token }}
-          commit-message: "Update ts-to-rls to ${{ inputs.sha }} from pkg.pr.new"
-          branch: "update-ts-to-rls-${{ inputs.sha }}"
+          commit-message: "Update ts-to-rls to ${{ steps.compute.outputs.reference }} from pkg.pr.new"
+          branch: "${{ steps.compute.outputs.branch_name }}"
           delete-branch: false
-          title: "Update ts-to-rls to ${{ inputs.sha }}"
+          title: "Update ts-to-rls to ${{ steps.compute.outputs.reference }}"
           body: |
-            This PR updates ts-to-rls to the version from pkg.pr.new at SHA ${{ inputs.sha }}
+            This PR updates ts-to-rls from pkg.pr.new
 
-            Installed via: `npm i https://pkg.pr.new/supabase/ts-to-rls@${{ inputs.sha }}`
+            **Source:** ${{ steps.compute.outputs.description }}
+
+            Installed via: `npm i https://pkg.pr.new/supabase/ts-to-rls@${{ steps.compute.outputs.sha }}`
+            ${{ inputs.pr_number != '' && inputs.sha == '' && format('
+            **Upstream PR:** https://github.com/supabase/ts-to-rls/pull/{0}', inputs.pr_number) || '' }}
           base: main
