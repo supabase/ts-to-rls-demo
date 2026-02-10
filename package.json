@@ -16,7 +16,7 @@
     "lucide-react": "^0.562.0",
     "react": "^19.2.3",
     "react-dom": "^19.2.3",
-    "ts-to-rls": "https://pkg.pr.new/supabase/ts-to-rls@cce5a48bd68f72174973d9473b3c0cafad74d440"
+    "ts-to-rls": "https://pkg.pr.new/supabase/ts-to-rls@2b8f57d2fcd8e59c8bd3f383e724157238972eb6"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.1",
